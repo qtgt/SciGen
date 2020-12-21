@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>QtGt的报告语料生成器 2020</title>
+</head>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/qita.js"></script>
+
+<script type="text/javascript" src="js/juziku.js"></script>
+<script type="text/javascript" src="js/zhengyan.js"></script>
+<script type="text/javascript" src="js/fangfa.js"></script>
+<script type="text/javascript" src="js/jieguo.js"></script>
+<script type="text/javascript" src="js/taolun.js"></script>
+<script type="text/javascript" src="js/jielun.js"></script>
+
+<script type="text/javascript" src="js/jukum.js"></script>
+<script type="text/javascript" src="js/jukun.js"></script>
+
+<script>
+window.$ = function (selector) {
+  return document.querySelector(selector);
+}
+
+//原数据库位置
+
+//基本
+//全局输入
+let 主题 = "Red"
+let	同义词 = "Blue"
+let	近义词 = "Orange"
+let	上级 = "colour"
+let 方法 = "measuring"
+let	特征 = "wave length"
+var 数组 = [];
+var 数组d = [];
+
+//全局写入
+序列 = 0;
+结果序列 = 0;
+局部序列1 = 0;
+章节 ="";
+//局部写入
+let 选中作者 = 作者[序列];
+let 选中时间 = 时间[序列];
+let 从句 = 从句库[局部序列1];
+let 结果小标题 = 结果部分[结果序列];
+//函数
+//基本函数
+function 选数字(最小值 = 0,最大值 = 100){
+	let 数字 = Math.random()*( 最大值 - 最小值 ) + 最小值;
+	return 数字;
+}
+function 选句子(列表){
+	let 坐标 = Math.floor( Math.random() * 列表.length );
+	return 列表[坐标];
+	return 列表.splice(坐标, 1, );
+}
+function 写句子(){
+	var 选的句子 = 选句子(句库名称[局部序列]);
+    var 写的句子 = 一套替换(选的句子);
+    return 写的句子;
+	}
+String.prototype.替换=function(被替换,新替换){
+    var reg=new RegExp(被替换,"g");
+    return this.replace(reg,新替换);
+}
+function 转变量名(字符串) {
+        var 中间名 = (new Function("return " + 字符串))();
+        return 中间名;
+    }
+//句子写法
+function 一套替换(选的句子){
+	let 主题1 = "<font color=\"red\">"+主题+"</font>";
+	let 同义词1 = "<font color=\"blue\">"+同义词+"</font>";
+	let 近义词1 = "<font color=\"orange\">"+近义词+"</font>";
+	let 上级1 = "<font color=\"purple\">"+上级+"</font>";
+	let 特征1 = "<u>"+特征+"</u>";
+	let 方法1 = "<i>"+方法+"</i>";
+	选的句子 = 选的句子.替换("主题",主题1);
+    选的句子 = 选的句子.替换("同义词",同义词1);
+    选的句子 = 选的句子.替换("近义词",近义词1);
+    选的句子 = 选的句子.替换("上级",上级1);
+	选的句子 = 选的句子.替换("方法",方法1);
+	选的句子 = 选的句子.替换("特征",特征1);
+	if (选的句子.match("作者")){
+		let 选中作者 = "<b>"+作者[序列]+"</b>";
+		let 选中时间 = "<b>"+时间[序列]+"</b>";
+		选的句子 = 选的句子.替换("作者",选中作者);
+		选的句子 = 选的句子.替换("时间",选中时间);
+		序列 = 序列 + 1;
+		return 选的句子;
+		}
+	else if (选的句子.match("时间")){
+		let 选中作者 = "<b>"+作者[序列]+"</b>";
+		let 选中时间 = "<b>"+时间[序列]+"</b>";
+		选的句子 = 选的句子.替换("作者",选中作者);
+		选的句子 = 选的句子.替换("时间",选中时间);
+		序列 = 序列 + 1;
+		return 选的句子;
+		}
+	else if (选的句子.match("…")){
+		let 从句 = "<b>"+从句库[局部序列1]+"</b>";
+		选的句子 = 选的句子.替换("…" ,从句);
+		局部序列1 = 局部序列1 + 1;
+		return 选的句子;
+		}
+	else return 选的句子;
+	}
+function 写证言句子(){
+	var 章节 = "<p><b>Intro</b></p>";
+    while (结果序列 < 证言部分.length){
+		let 结果小标题 = 证言部分[结果序列];
+		let 选的句子 = 选句子(结果小标题);
+		let 写的句子 = 一套替换(选的句子) +" ";
+		章节 = 章节 + 写的句子;
+		结果序列 = 结果序列 + 1;
+	}
+		document.getElementById("证言区域").innerHTML = 章节;
+	}
+function 生成证言(){
+	主题 = $("input[id='主题']").value
+	同义词 = $("input[id='同义词']").value
+	近义词 = $("input[id='近义词']").value
+	上级 = $("input[id='上级']").value
+	if (1==1){
+	    写证言句子();
+		结果序列 = 0;
+		局部序列1 = 0;
+		}
+	}
+function 写方法句子(){
+	var 章节 = "<p><b>Methods</b></p>";
+    while (结果序列 < 方法部分.length){
+		let 结果小标题 = 方法部分[结果序列];
+		let 选的句子 = 选句子(结果小标题);
+		let 写的句子 = 一套替换(选的句子) +" ";
+		章节 = 章节 + 写的句子;
+		结果序列 = 结果序列 + 1;
+	}
+		document.getElementById("方法区域").innerHTML = 章节;
+	}
+function 生成方法(){
+	主题 = $("input[id='主题']").value
+	同义词 = $("input[id='同义词']").value
+	近义词 = $("input[id='近义词']").value
+	上级 = $("input[id='上级']").value
+	if (2==2){
+	    写方法句子();
+		结果序列 = 0;
+		局部序列1 = 0;
+		}
+	}
+function 写结果句子(){
+	var 章节 = "<p><b>Results</b></p>";
+    while (结果序列 < 结果部分.length){
+		let 结果小标题 = 结果部分[结果序列];
+		let 选的句子 = 选句子(结果小标题);
+		let 写的句子 = 一套替换(选的句子) +" ";
+		章节 = 章节 + 写的句子;
+		结果序列 = 结果序列 + 1;
+	}
+		document.getElementById("结果区域").innerHTML = 章节;
+	}
+function 生成结果(){
+	主题 = $("input[id='主题']").value
+	同义词 = $("input[id='同义词']").value
+	近义词 = $("input[id='近义词']").value
+	上级 = $("input[id='上级']").value
+	if (3==3){
+	    写结果句子();
+		结果序列 = 0;
+		局部序列1 = 0;
+		}
+	}
+function 写讨论句子(){
+	var 章节 = "<p><b>Discuss</b></p>";
+    while (结果序列 < 讨论部分.length){
+		let 结果小标题 = 讨论部分[结果序列];
+		let 选的句子 = 选句子(结果小标题);
+		let 写的句子 = 一套替换(选的句子) +" ";
+		章节 = 章节 + 写的句子;
+		结果序列 = 结果序列 + 1;
+	}
+		document.getElementById("讨论区域").innerHTML = 章节;
+	}
+function 生成讨论(){
+	主题 = $("input[id='主题']").value
+	同义词 = $("input[id='同义词']").value
+	近义词 = $("input[id='近义词']").value
+	上级 = $("input[id='上级']").value
+	if (4==4){
+	    写讨论句子();
+		结果序列 = 0;
+		局部序列1 = 0;
+		}
+	}
+function 写结论句子(){
+	var 章节 = "<p><b>Conclusion</b></p>";
+    while (结果序列 < 结论部分.length){
+		let 结果小标题 = 结论部分[结果序列];
+		let 选的句子 = 选句子(结果小标题);
+		let 写的句子 = 一套替换(选的句子) +" ";
+		章节 = 章节 + 写的句子;
+		结果序列 = 结果序列 + 1;
+	}
+		document.getElementById("结论区域").innerHTML = 章节;
+	}
+function 生成结论(){
+	主题 = $("input[id='主题']").value
+	同义词 = $("input[id='同义词']").value
+	近义词 = $("input[id='近义词']").value
+	上级 = $("input[id='上级']").value
+	if (5==5){
+	    写结论句子();
+		结果序列 = 0;
+		局部序列1 = 0;
+		序列 = 0;
+		}
+	}
+//单纯数组
+function 显示(){
+    var 数组显示=显示位置+ "序列为："+"<br/>";
+    for (i = 0; i < 数组d.length; i++) {
+        数组显示 = 数组显示 + i + "：" + 数组d[i] + "； ";  
+        }
+	var x=document.getElementById(显示位置);
+	x.innerHTML=数组显示;
+    var 数组显示= +"序列为:"+"<br/>";
+}
+function 机械显示(){
+    document.getElementById(显示位置).innerHTML = "";
+    //var 机械显示= "序列为："+"<br/>";
+    //for (i = 0; i < 数组.length; i++) {
+    //    机械显示 = " " + 数组[i] + ",";  
+    //    }
+	//var x=document.getElementById("显示位置");
+	//x.innerHTML=机械显示;
+    //var 机械显示= "序列为:"+"<br/>";
+}
+
+function 增加(){
+	数组d.splice(数组.length,0,增加值.value);
+    变量名=转变量名(增加值.value);
+    数组.splice(数组.length,0,变量名);
+    显示();
+}
+function 删除(){
+    数组.splice(删除数.value,1);
+	数组d.splice(删除数.value,1);
+    显示();
+}
+function 插入(){
+	数组d.splice(插入数.value,0,插入值.value);
+    变量名=转变量名(插入值.value);
+    数组.splice(插入数.value,0,变量名);
+    显示();
+}
+function 替换1(){
+	数组d.splice(替换数.value,1,替换值.value);
+    变量名=转变量名(替换值.value);
+    数组.splice(替换数.value,1,变量名);
+    显示();
+}
+
+//选框部分
+function 选区变化(){
+	增加值.value=数组d[0];
+	插入值.value=数组d[1];
+	替换值.value=数组d[2];
+}
+function 单选选定(待改数组){
+	document.getElementById("result").value=待改数组;
+	显示位置=待改数组;
+	switch(待改数组){
+	case "证言部分":
+		数组=证言部分;
+		数组d=证言部分d;
+		选区变化();
+		break;
+	case "方法部分":
+		数组=方法部分;
+		数组d=方法部分d;
+		选区变化();
+        break;
+	case "结果部分":
+		数组=结果部分;
+		数组d=结果部分d;
+		选区变化();
+		break;
+	case "讨论部分":
+		数组=结论部分;
+		数组d=结论部分d;
+		选区变化();
+		break;
+	case "结论部分":
+		数组=讨论部分;
+		数组d=讨论部分d;
+		选区变化();
+        break;
+    default: alert("Bug了");
+		}
+	}
+	
+</script>
+<style>
+  @media screen and (max-width: 1024px) {
+    html{
+      font-size: 2vw;
+      color: #333333;
+    }
+    body{
+      margin: 0;
+    }
+    #输入{
+      border: 2px solid #333333;
+      margin: 20px;
+      padding: 6px;
+      background: #f8f8f8;
+    }
+	#输入 input{
+      border: none;
+      border-bottom: #666666 2px solid;
+      padding: 1px 0 0 0;
+      margin: 0px 6px 0 6px;
+      vertical-align: baseline;
+      font-size: 1.5rem;
+      background: #f8f8f8;
+      color: #333333;
+      text-align: center;
+      min-width: 20%;
+    }
+	#输入 div{
+      font-size: 1.5rem;
+      vertical-align: baseline;
+      margin-left: 6px;}
+    #输入 button{
+      border: 0;
+      padding: 3px 7px 3px 7px;
+      margin: 0;
+      vertical-align: top;
+      font-size: 1.5rem;
+      background: #454545;
+      color: #efefef;}
+	#输出 {
+      border: 2px solid #333333;
+      margin: 20px;
+      padding: 20px;
+      background: #f8f8f8;}
+	#输出 div{
+      font-size: 1.5rem;
+      vertical-align: baseline;
+      margin-left: 6px;}
+    
+    }
+    
+  @media screen and (min-width: 1024px) {
+    html{
+      font-size: 1vw;
+      color: #333333;
+    }
+    body{
+      margin: 0;
+    }
+    #输入{
+      border: 2px solid #333333;
+      margin: 20px;
+      padding: 20px;
+      background: #f8f8f8;
+    }
+	#输入 input{
+      border: none;
+      border-bottom: #666666 2px solid;
+      padding: 1px 0 0 0;
+      margin: 0px 20px 0 20px;
+      vertical-align: baseline;
+      font-size: 1 rem;
+      background: #f8f8f8;
+      color: #333333;
+      text-align: center;
+      min-width: 20%;
+    }
+	#输入 button{
+      border: 0;
+      padding: 5px 15px 5px 15px;
+      margin: 0;
+      vertical-align: top;
+      font-size: 1 rem;
+      background: #454545;
+      color: #efefef;
+    }
+	#输出{
+      border: 2px solid #333333;
+      margin: 20px;
+      padding: 20px;
+      background: #f8f8f8;
+    }
+    
+  }
+ 
+</style>
+<div id = "输入">
+<p></p>
+<p></p>
+<p><center><b>QtGt的报告语料生成器</b></center></p>
+<p></p>
+<div id = "文章设置">
+<p style="color:red">主题<input type="text" value=Red name="主题" id="主题"></p>
+<p style="color:blue">同义词<input type="text" value=Blue name="同义词" id="同义词"></p>
+<p style="color:orange">近义词<input type="text" value="Orange" name="近义词" id="近义词"></p>
+<p style="color:purple">上级<input type="text" value=colour name="上级" id="上级"></p>
+<p><i>方法</i><input type="text" value=measuring name="方法" id="方法"></p>
+<p><u>特征</u><input type="text" value="wave length" name="特征" id="特征"></p>
+<p></p>
+<p><center><a href="https://github.com/qtgt/SciGen/blob/master/声明.txt" target="_blank">声明</a></center></p>
+<p></p>
+<p>选择要设置的句子序列:</p>
+<form>
+<input type="radio" name="待改数组" onclick="单选选定(this.value)" value="证言部分">Intro部分<br>
+<input type="radio" name="待改数组" onclick="单选选定(this.value)" value="方法部分">Methods 部分<br>
+<input type="radio" name="待改数组" onclick="单选选定(this.value)" value="结果部分">Results 部分<br>
+<input type="radio" name="待改数组" onclick="单选选定(this.value)" value="讨论部分">Discussions 部分<br>
+<input type="radio" name="待改数组" onclick="单选选定(this.value)" value="结论部分">Conclusion 部分<br>
+选择的部分是: <input type="text" id="result">
+</form></div>
+<div id = "数组设置">
+    <p><input id="增加值" value="增加值"/>&nbsp<button onclick="增加()">在末尾添加值</button></p>
+    <p><input id="删除数" value="0"/>&nbsp<button onclick="删除()">删除第几号值</button></p>
+    <p><input id="插入数" value="0"/>&nbsp<input id="插入值" value="插入值" value=/>&nbsp<button onclick="插入()">插入为几号值</button></p>
+    <p><input id="替换数" value="0"/>&nbsp<input id="替换值" value="替换值" value=/>&nbsp<button onclick="替换1()">替换掉几号值</button></p>
+    <p><button onclick="显示()">友好显示数组</button>
+    <button onclick="机械显示()">取消显示数组</button></p>
+    <p id="显示位置"></p>
+	<p id="证言部分"></p>
+	<p id="方法部分"></p>
+    <p id="结果部分"></p>
+	<p id="讨论部分"></p>
+	<p id="结论部分"></p>	</div>
+<p></p>
+<div id = "button"><center><button onclick="生成证言();生成方法();生成结果();生成讨论(),生成结论()"><p>同意声明并生成语料</p></button></center></div>
+</div>
+<div id = "输出">
+<p></p>
+<p></p>
+<div id="证言区域"><p><b>版本说明：</b></p><p>现项目地址 <a href="https://github.com/qtgt/SciGen/" rel="nofollow">https://qtgt.github.io/SciGen</a></p><p>原版（Javascript 和 生成部分）<del> 照抄 </del>参考：<a href="https://github.com/menzi11/BullshitGenerator" target="_blank">@menzi11</a></p><p>网页版（样式和声明）<del> 照抄 </del>参考：<a href="https://github.com/suulnnka/BullshitGenerator" target="_blank">@suulnnka</a></p><p>主要参考文献：<a href="https://www.amazon.co.uk/The-Academic-Phrasebank-academic-resource-students-researchers-ebook/dp/B019INQ45Y" target="_blank">Morley, J. (2017). The academic phrasebank: An academic writing resource for students and researchers</a>.</p></div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div id="方法区域"><p><b>关于本版：</p><p></b>首先，分写的wave length，是为了说明支持空格；再就是，由于本人并不真懂 CSS 和 Javascript，所以没有售后~~</p><p>© QtGt Studio (Not-Really-Existent-Yet) 2019-2020, all rights reserved. </p></div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div id="结果区域"><p><b>声明：</b></p></p><p>本作品使用反996许可证发布，仅供测试使用，请勿将生成的文章用于正规用途</p></div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div id="讨论区域"><p><b>免责声明:</b></p><p>在使用本作品前，请您务必仔细阅读并透彻理解本声明。您可以选择不使用本作品，但如果您使用本作品，您的使用行为将被视为对本声明全部内容的认可。</p><p>本作品产生的文章由用户输入内容结合随机信息生成，版权人不保障生成文章的安全性、正确性、及时性、合法性，用户在使用过程中的风险由用户自行承担，版权人对用户使用本作品产生的内容其概不负责，亦不承担任何法律责任。</p><p>任何本作品生成的链接地址均系第三方或用户生成，版权人对链接本身及由链接产生的内容概不负责，亦不承担任何法律责任。</p><p>本作品产生的文章均由浏览器产生，无服务器端服务且无存储，版权人不对由用户产生的侵权行为负责，亦不承担任何法律责任。</p><p>本作品不对用户使用过程中使用的任何第三方产品负责，亦不承担任何法律责任。</p><p>本作品不对任何本作品使用的第三方服务负责，亦不承担任何法律责任。</p>本作品不对任何基于本作品的衍生品负责，亦不承担任何法律责任。<p></div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<div id="结论区域"><p><b>许可证：</b></p><p>非内容部分版权所有（c）2019-2020 meng ke, suulnnka, qtgt</p><p></p><p>反996许可证版本1.0</p><p></p><p>在符合下列条件的情况下，特此免费向任何得到本授权作品的副本（包括源代码、文件和/或相关内容，以下统称为“授权作品”）的个人和法人实体授权：被授权个人或法人实体有权以任何目的处置授权作品，包括但不限于使用、复制，修改，衍生利用、散布，发布和再许可：</p><p>1. 个人或法人实体必须在许可作品的每个再散布或衍生副本上包含以上版权声明和本许可证，不得自行修改。</p><p>2. 个人或法人实体必须严格遵守与个人实际所在地或个人出生地或归化地、或法人实体注册地或经营地（以较严格者为准）的司法管辖区所有适用的与劳动和就业相关法律、法规、规则和标准。如果该司法管辖区没有此类法律、法规、规章和标准或其法律、法规、规章和标准不可执行，则个人或法人实体必须遵守国际劳工标准的核心公约。</p><p>3. 个人或法人不得以任何方式诱导、暗示或强迫其全职或兼职员工或其独立承包人以口头或书面形式同意直接或间接限制、削弱或放弃其所拥有的，受相关与劳动和就业有关的法律、法规、规则和标准保护的权利或补救措施，无论该等书面或口头协议是否被该司法管辖区的法律所承认，该等个人或法人实体也不得以任何方法限制其雇员或独立承包人向版权持有人或监督许可证合规情况的有关当局报告或投诉上述违反许可证的行为的权利。</p><p>该授权作品是\"按原样\"提供，不做任何明示或暗示的保证，包括但不限于对适销性、特定用途适用性和非侵权性的保证。在任何情况下，无论是在合同诉讼、侵权诉讼或其他诉讼中，版权持有人均不承担因本软件或本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。</p></div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+</html>
